@@ -1,0 +1,1 @@
+REDIS_URL=redis://db_redis:6379

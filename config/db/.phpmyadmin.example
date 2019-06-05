@@ -1,0 +1,4 @@
+PMA_HOST=db_mysql
+PMA_USER=mysqluser
+PMA_PASSWORD=mysqlpass
+MYSQL_ROOT_PASSWORD=mysqlrootpass

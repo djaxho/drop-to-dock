@@ -1,0 +1,4 @@
+MYSQL_USER=mysqluser
+MYSQL_ROOT_PASSWORD=mysqlrootpass
+MYSQL_PASSWORD=mysqlpass
+MYSQL_DATABASE=drop_to_dock

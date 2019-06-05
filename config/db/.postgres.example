@@ -1,0 +1,3 @@
+POSTGRES_USER=postgresuser
+POSTGRES_PASSWORD=postgrespass
+POSTGRES_DB=drop_to_dock

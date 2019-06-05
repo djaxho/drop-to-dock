@@ -1,0 +1,77 @@
+version: '3'
+
+services:
+
+  nginx:
+    image: nginx:1.17
+    restart: always
+    ports:
+        - "80:80"
+    volumes:
+        - ../:/code
+        - ./config/nginx/local.conf:/etc/nginx/conf.d/default.conf
+    networks:
+        - nginx_network
+
+  php:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/php.dockerfile
+    volumes:
+        - ../:/code
+    networks:
+        - nginx_network
+        - db_mysql_network
+        - db_redis_network
+
+  db_mysql:
+    image: mysql:5.7
+    command: --max_allowed_packet=1G
+    volumes:
+      - drop-to-dock-mysql-volume:/var/lib/mysql
+    ports:
+        - "3306:3306"
+    env_file:
+      - config/db/.mysql
+    networks:
+      - db_mysql_network
+
+  db_mysql_test:
+    image: mysql:5.7
+    ports:
+        - "33061:3306"
+    env_file:
+        - config/db/.mysqlTest
+    networks:
+        - db_mysql_network
+
+  db_redis:
+    image: redis:5.0
+    env_file:
+      - config/db/.redis
+    ports:
+      - "6379:6379"
+    networks:
+      - db_redis_network
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.8
+    ports:
+        - "8181:80"
+    env_file:
+      - config/db/.phpmyadmin
+    volumes:
+       - /sessions
+    networks:
+      - db_mysql_network
+
+networks:
+  db_mysql_network:
+    driver: bridge
+  db_redis_network:
+    driver: bridge
+  nginx_network:
+    driver: bridge
+
+volumes:
+  drop-to-dock-mysql-volume:
