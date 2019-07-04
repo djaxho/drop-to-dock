@@ -19,6 +19,7 @@ services:
       dockerfile: ./dockerfiles/php.dockerfile
     volumes:
         - ../:/code
+        - ./config/php/memory-limit.ini:/usr/local/etc/php/conf.d/memory-limit-php.ini
     networks:
         - nginx_network
         - db_mysql_network
@@ -53,7 +54,7 @@ services:
       - "6379:6379"
     networks:
       - db_redis_network
-  
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:4.8
     ports:
