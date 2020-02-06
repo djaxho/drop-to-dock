@@ -14,6 +14,8 @@ services:
         - nginx_network
 
   php:
+    env_file:
+      - ./config/php/.env
     build:
       context: .
       dockerfile: ./dockerfiles/php.dockerfile
